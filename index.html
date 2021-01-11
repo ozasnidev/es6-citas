@@ -15,11 +15,11 @@
     <main class="container is-fluid">
         <div class="columns main-container">
             <aside class="menu column is-one-quarter">
-                <p class="title menu-label is-4">Nueva Cita</p>
-                <form>
+                <p class="title menu-label is-4 dashboard-title">Nueva Cita</p>
+                <form id="nuevaCitaForm">
                     <div class="field">
                         <p class="control has-icons-right">
-                            <input type="text" class="input" placeholder="Paciente">
+                            <input id="pacienteInput" type="text" class="input" name="paciente" placeholder="Paciente">
                             <span class="icon is-right">
                                 <i class="fas fa-user-circle"></i>
                             </span>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="field">
                         <p class="control has-icons-right">
-                            <input type="text" class="input" placeholder="Dirección">
+                            <input id="direccionInput" type="text" class="input" name="direccion" placeholder="Dirección">
                             <span class="icon is-right">
                                 <i class="fas fa-home"></i>
                             </span>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="field">
                         <p class="control has-icons-right">
-                            <input type="text" class="input" placeholder="Teléfono">
+                            <input id="telefonoInput" type="text" class="input" name="telefono" placeholder="Teléfono">
                             <span class="icon is-right">
                                 <i class="fas fa-phone"></i>
                             </span>
@@ -44,22 +44,22 @@
                     <div class="columns is-desktop">
                         <div class="field is-three-fifths column">
                             <p class="control">
-                                <input class="input" type="date" placeholder="Día de registro">
+                                <input id="diaRegistroInput" class="input" type="date" name="dia" placeholder="Día de registro">
                             </p>
                         </div>
                         <div class="field is-two-fifths column">
                             <p class="control">
-                                <input class="input" type="time" placeholder="Hora de registro" />       
+                                <input id="horaRegistroInput" class="input" type="time" name="hora" placeholder="Hora de registro" />       
                             </p>
                         </div>
                     </div>
                     <div class="field">
                         <p class="control">
-                            <textarea class="textarea" rows="5" placeholder="Síntomas"></textarea>
+                            <textarea id="sintomasInput" class="textarea" rows="5" name="sintomas" placeholder="Síntomas"></textarea>
                         </p>
                     </div>
                     
-                    <button class="button is-success is-light is-fullwidth is-rounded" type="submit">
+                    <button id="guardarButton" class="button is-success is-light is-fullwidth is-rounded" type="submit">
                         <span class="icon is-small">
                             <i class="fas fa-save"></i>
                         </span>
@@ -67,14 +67,12 @@
                     </button>
                 </form>
             </aside>
-            <div id="desktop-container" class="column is-three-quarters">
-                <h3 class="title is-4 menu-label">Citas activas</h3>
+            <div id="desktopContainer" class="column is-three-quarters">
+                <h3 class="title is-4 menu-label dashboard-title">Citas activas</h3>
                 <p>Mock Text</p>
             </div>
         </div>
-    </main>
-    <footer id="footer-container" class="has-text-centered">
-        <p>Mock footer</p>
-    </footer>     
+    </main> 
+    <script src="js/app.js"></script>   
 </body>
 </html>
