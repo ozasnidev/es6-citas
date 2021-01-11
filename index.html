@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es_ES">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script defer src="./node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+    <title>Meeting Manager</title>
+</head>
+<body>
+    <header class="has-text-centered">
+        <h1 class="title is-1">Meet Manager</h1>
+    </header>
+    <main class="container is-fluid">
+        <div class="columns main-container">
+            <aside class="menu column is-one-quarter">
+                <p class="title menu-label is-4">Nueva Cita</p>
+                <form>
+                    <div class="field">
+                        <p class="control has-icons-right">
+                            <input type="text" class="input" placeholder="Paciente">
+                            <span class="icon is-right">
+                                <i class="fas fa-user-circle"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-right">
+                            <input type="text" class="input" placeholder="Dirección">
+                            <span class="icon is-right">
+                                <i class="fas fa-home"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-right">
+                            <input type="text" class="input" placeholder="Teléfono">
+                            <span class="icon is-right">
+                                <i class="fas fa-phone"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="columns is-desktop">
+                        <div class="field is-three-fifths column">
+                            <p class="control">
+                                <input class="input" type="date" placeholder="Día de registro">
+                            </p>
+                        </div>
+                        <div class="field is-two-fifths column">
+                            <p class="control">
+                                <input class="input" type="time" placeholder="Hora de registro" />       
+                            </p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <p class="control">
+                            <textarea class="textarea" rows="5" placeholder="Síntomas"></textarea>
+                        </p>
+                    </div>
+                    
+                    <button class="button is-success is-light is-fullwidth is-rounded" type="submit">
+                        <span class="icon is-small">
+                            <i class="fas fa-save"></i>
+                        </span>
+                        <span>Guardar</span>
+                    </button>
+                </form>
+            </aside>
+            <div id="desktop-container" class="column is-three-quarters">
+                <h3 class="title is-4 menu-label">Citas activas</h3>
+                <p>Mock Text</p>
+            </div>
+        </div>
+    </main>
+    <footer id="footer-container" class="has-text-centered">
+        <p>Mock footer</p>
+    </footer>     
+</body>
+</html>
