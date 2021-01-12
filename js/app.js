@@ -15,6 +15,11 @@ class CitaList {
     constructor(){
         this.citasCollection = [];
     }
+    addCita(citaObject){
+        this.citasCollection = [...this.citasCollection, citaObject];
+
+        console.log(this.citasCollection);
+    }
 }
 
 class UI {
@@ -62,7 +67,6 @@ function eventListeners(){
 
 function setDatosCita(event){
     citaObject[event.target.name] = event.target.value;
-    console.log(citaObject);
 }
 
 function validarCita(event){
@@ -78,5 +82,35 @@ function validarCita(event){
         sintomas === ''){
             userInterface.imprimirAlerta('Falta informacion');
             return;           
-        } 
+        }  
+    setDatosCita(event);
+    guardarEnRepositorio();
+}
+
+function guid(len) {
+    let buf = [],
+        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+        charlen = chars.length,
+        length = len || 32;
+        
+    for (let i = 0; i < length; i++) {
+        buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
+    }
+    return buf.join('');
+}
+
+function guardarEnRepositorio(){
+    citaObject.id = guid();
+    citasRepository.addCita({...citaObject});
+    nuevaCitaForm.reset();
+    resetCita();
+}
+
+function resetCita(){
+    citaObject.paciente='';
+    citaObject.direccion='';
+    citaObject.telefono='';
+    citaObject.dia='';
+    citaObject.hora='';
+    citaObject.sintomas='';
 }
