@@ -17,8 +17,6 @@ class CitaList {
     }
     addCita(citaObject){
         this.citasCollection = [...this.citasCollection, citaObject];
-
-        console.log(this.citasCollection);
     }
 }
 
@@ -46,6 +44,47 @@ class UI {
         setTimeout(()=>{
             mensajeContainer.remove();
         },5000);
+    }
+    printRepository(repository){
+        repository.forEach(cita => {
+            const cardContainer = document.createElement('div');
+            cardContainer.classList.add('card');
+
+            const cardHeader = document.createElement('header');
+            cardHeader.classList.add('card-header');
+            cardHeader.innerHTML = `<p class="card-header-title">${cita.paciente}</p>`;
+
+            const cardContentContainer = document.createElement('div');
+            cardContentContainer.classList.add('card-content');
+            const cardContent = document.createElement('div');
+            cardContent.classList.add('content');
+            cardContent.innerHTML = `${cita.sintomas}`;
+            cardContentContainer.appendChild(cardContent);
+            
+            const cardFooterContainer = document.createElement('footer');
+            cardFooterContainer.classList.add('card-footer');
+            const cardLinkSave = document.createElement('a');
+            cardLinkSave.classList.add('card-footer-item');
+            cardLinkSave.textContent = "Guardar";
+            cardLinkSave.href = "#";
+            const cardLinkEdit = document.createElement('a');
+            cardLinkEdit.classList.add('card-footer-item');
+            cardLinkEdit.href = "#";
+            cardLinkEdit.textContent = "Editar";
+            const cardLinkDelete = document.createElement('a');
+            cardLinkDelete.classList.add('card-footer-item');
+            cardLinkDelete.href = "#";
+            cardLinkDelete.textContent = "Eliminar";
+            cardFooterContainer.appendChild(cardLinkSave);
+            cardFooterContainer.appendChild(cardLinkEdit);
+            cardFooterContainer.appendChild(cardLinkDelete);
+
+            cardContainer.appendChild(cardHeader);
+            cardContainer.appendChild(cardContentContainer);
+            cardContainer.appendChild(cardFooterContainer);
+
+            document.querySelector('#desktopContainer').appendChild(cardContainer);
+        });
     }
 }
 
@@ -85,25 +124,15 @@ function validarCita(event){
         }  
     setDatosCita(event);
     guardarEnRepositorio();
-}
-
-function guid(len) {
-    let buf = [],
-        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-        charlen = chars.length,
-        length = len || 32;
-        
-    for (let i = 0; i < length; i++) {
-        buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
-    }
-    return buf.join('');
+    resetCita();
 }
 
 function guardarEnRepositorio(){
-    citaObject.id = guid();
+    citaObject.id = new Date().getMilliseconds();
     citasRepository.addCita({...citaObject});
     nuevaCitaForm.reset();
-    resetCita();
+    console.log(citasRepository.citasCollection);
+    userInterface.printRepository(citasRepository.citasCollection);
 }
 
 function resetCita(){
@@ -113,4 +142,4 @@ function resetCita(){
     citaObject.dia='';
     citaObject.hora='';
     citaObject.sintomas='';
-}
+}   
