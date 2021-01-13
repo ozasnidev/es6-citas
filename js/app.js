@@ -8,6 +8,7 @@ const horaRegistroInput = document.querySelector("#horaRegistroInput");
 const sintomasInput = document.querySelector("#sintomasInput");
 
 const desktopContainer = document.querySelector("#desktopContainer");
+const desktopCardDeck = document.querySelector("#desktop-card-deck");
 
 const citaObject = { paciente: '', direccion: '', telefono: '', dia: '', hora: '', sintomas: '' }
 
@@ -17,6 +18,9 @@ class CitaList {
     }
     addCita(citaObject){
         this.citasCollection = [...this.citasCollection, citaObject];
+    }
+    deleteCita(id){
+        this.citasCollection = this.citasCollection.filter( cita => cita.id !== id);
     }
 }
 
@@ -46,9 +50,12 @@ class UI {
         },5000);
     }
     printRepository(repository){
+
+        this.vaciarRepository();
+
         repository.forEach(cita => {
             const cardContainer = document.createElement('div');
-            cardContainer.classList.add('card');
+            cardContainer.classList.add('card','cita-card');
 
             const cardHeader = document.createElement('header');
             cardHeader.classList.add('card-header');
@@ -63,28 +70,25 @@ class UI {
             
             const cardFooterContainer = document.createElement('footer');
             cardFooterContainer.classList.add('card-footer');
-            const cardLinkSave = document.createElement('a');
-            cardLinkSave.classList.add('card-footer-item');
-            cardLinkSave.textContent = "Guardar";
-            cardLinkSave.href = "#";
-            const cardLinkEdit = document.createElement('a');
-            cardLinkEdit.classList.add('card-footer-item');
-            cardLinkEdit.href = "#";
-            cardLinkEdit.textContent = "Editar";
             const cardLinkDelete = document.createElement('a');
             cardLinkDelete.classList.add('card-footer-item');
             cardLinkDelete.href = "#";
+            cardLinkDelete.onclick= () => eliminarCita(cita.id);
             cardLinkDelete.textContent = "Eliminar";
-            cardFooterContainer.appendChild(cardLinkSave);
-            cardFooterContainer.appendChild(cardLinkEdit);
+
             cardFooterContainer.appendChild(cardLinkDelete);
 
             cardContainer.appendChild(cardHeader);
             cardContainer.appendChild(cardContentContainer);
             cardContainer.appendChild(cardFooterContainer);
 
-            document.querySelector('#desktopContainer').appendChild(cardContainer);
+            desktopCardDeck.appendChild(cardContainer);
         });
+    }
+    vaciarRepository() {
+        while(desktopCardDeck.firstChild){
+            desktopCardDeck.removeChild(desktopCardDeck.firstChild);
+        }
     }
 }
 
@@ -131,7 +135,12 @@ function guardarEnRepositorio(){
     citaObject.id = new Date().getMilliseconds();
     citasRepository.addCita({...citaObject});
     nuevaCitaForm.reset();
-    console.log(citasRepository.citasCollection);
+    userInterface.printRepository(citasRepository.citasCollection);
+}
+
+function eliminarCita(id){
+    citasRepository.deleteCita(id);
+    userInterface.imprimirAlerta('Cita eliminada correctamente');
     userInterface.printRepository(citasRepository.citasCollection);
 }
 

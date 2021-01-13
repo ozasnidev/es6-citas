@@ -21,11 +21,23 @@ textarea{
 .dashboard-title{
     color: white;
 }
-/* aside{
-}
-#desktop-container{
-} */
 #footer-container{
     margin-top: 1.5rem;
     background-color: transparent;
+}
+#desktop-card-deck{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding:0.75rem;
+}
+.cita-card{
+    min-width: 25%;
+    margin: 0.25rem;
+}
+
+@media (max-width: 1024px){
+    .cita-card{
+        width: 100%;
+    }
 }
