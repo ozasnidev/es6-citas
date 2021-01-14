@@ -11,6 +11,7 @@ const desktopContainer = document.querySelector("#desktopContainer");
 const desktopCardDeck = document.querySelector("#desktop-card-deck");
 
 const citaObject = { paciente: '', direccion: '', telefono: '', dia: '', hora: '', sintomas: '' }
+let editMode;
 
 class CitaList {
     constructor(){
@@ -18,6 +19,12 @@ class CitaList {
     }
     addCita(citaObject){
         this.citasCollection = [...this.citasCollection, citaObject];
+    }
+    editCita(citaActualizada){
+        this.citasCollection = this.citasCollection.map( cita =>
+            cita.id === citaActualizada.id ? citaActualizada : cita 
+        ); 
+            
     }
     deleteCita(id){
         this.citasCollection = this.citasCollection.filter( cita => cita.id !== id);
@@ -75,8 +82,14 @@ class UI {
             cardLinkDelete.href = "#";
             cardLinkDelete.onclick= () => eliminarCita(cita.id);
             cardLinkDelete.textContent = "Eliminar";
+            const cardLinkEditar = document.createElement('a');
+            cardLinkEditar.classList.add('card-footer-item');
+            cardLinkEditar.href = "#";
+            cardLinkEditar.onclick = () => editarCita(cita);
+            cardLinkEditar.textContent = "Editar";
 
             cardFooterContainer.appendChild(cardLinkDelete);
+            cardFooterContainer.appendChild(cardLinkEditar)
 
             cardContainer.appendChild(cardHeader);
             cardContainer.appendChild(cardContentContainer);
@@ -126,16 +139,47 @@ function validarCita(event){
             userInterface.imprimirAlerta('Falta informacion');
             return;           
         }  
-    setDatosCita(event);
-    guardarEnRepositorio();
+
+    if(editMode){
+        citasRepository.editCita({...citaObject});
+        userInterface.printRepository(citasRepository.citasCollection);
+        userInterface.imprimirAlerta('Cita editada correctamente');
+        document.querySelector('#guardarButton').textContent = "Guardar";
+        editMode = false;
+    }else{
+        setDatosCita(event);
+        guardarEnRepositorio();
+    }
+    nuevaCitaForm.reset();
     resetCita();
 }
 
 function guardarEnRepositorio(){
     citaObject.id = new Date().getMilliseconds();
     citasRepository.addCita({...citaObject});
-    nuevaCitaForm.reset();
     userInterface.printRepository(citasRepository.citasCollection);
+}
+
+function editarCita(cita){
+    const {id, paciente, direccion, telefono, dia, hora, sintomas} = cita;
+
+    pacienteInput.value = paciente;
+    direccionInput.value = direccion;
+    telefonoInput.value = telefono;
+    diaRegistroInput.value = dia;
+    horaRegistroInput.value = hora;
+    sintomasInput.value = sintomas; 
+
+    citaObject.id = id;
+    citaObject.paciente = pacienteInput.value;
+    citaObject.direccion = direccionInput.value;
+    citaObject.telefono = telefonoInput.value;
+    citaObject.dia = diaRegistroInput.value;
+    citaObject.hora = horaRegistroInput.value;
+    citaObject.sintomas = sintomasInput.value;
+
+    document.querySelector('#guardarButton').textContent = "Guardar Cambios";
+    editMode = true;
 }
 
 function eliminarCita(id){
